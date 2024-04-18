@@ -48,6 +48,24 @@ def uniform_cost_search(problem):
     # else if child.STATE is in frontier with higher PATH-COST then
     # replace that frontier node with child
 
+    # function findStar(puzzle)
+    # puzzle is a 3x3 matrix
+
+    # for i -> row
+       # for j -> column
+
+    # if  [i,j] == '*'
+
+    # curent_puzzle = [
+    #    [3,    6,    7],
+    #    [5,    8,    *],
+    #    [2     1,    4],
+    # ]
+
+    # returns [row, column] of the star [1, 2]
+
+    # figuring out path cost
+    
 
     pass
 
