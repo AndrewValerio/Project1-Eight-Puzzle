@@ -17,7 +17,7 @@ class Problem:
         self.goal_state = goal_state
         self.operators = []  # List of operators
         self.frontier = PriorityQueue()
-        self.explored_list = []
+        self.explored = set()
 
     def goal_test(self, state):
         # This method to check if the goal state has been reached
@@ -54,4 +54,5 @@ def uniform_cost_search(problem):
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
     # pass the type of heuristic (Misplaced tile or Elucidean Distance)
+    # A8 is just uniform cost search, but uses g
     pass
