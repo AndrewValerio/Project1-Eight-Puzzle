@@ -16,7 +16,6 @@ class Node:
 
     def get_children(self):
         # This method to generate the children of this node
-
         nodes_children = []
         for move in [self.go_left(), self.go_right(), self.go_up(), self.go_down()]:
             if move is not None:
@@ -98,9 +97,9 @@ test()
 
 
 class Problem:
-    def __init__(self, initial_state, goal_state):
+    def __init__(self, initial_state):
         self.initial_state = initial_state
-        self.goal_state = goal_state
+        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
         self.operators = []  # List of operators
         self.frontier = PriorityQueue()
         self.explored = set()
