@@ -92,7 +92,7 @@ def test():
 
     print("All tests passed!")
 
-test()
+#test()
 
 
 
@@ -105,12 +105,20 @@ class Problem:
         self.explored = set()
 
     def goal_test(self, state):
-        # This method to check if the goal state has been reached
-        pass
+        return state == self.goal_state
 
     def get_distance_to_goal(self, state1, state2):
         # This method to get the distance the current state has to the goal
         pass
+
+def get_initial_state():
+    print("Enter your puzzle, use a zero to represent the blank\n")
+    initial_state = []
+    for i in range(3):
+        row_input = input("Enter the {} row with three numbers, use space or tabs between numbers: ".format(["first", "second", "third"][i])).strip()
+        row = row_input.split()
+        initial_state.append(row)
+    return initial_state
 
 def uniform_cost_search(problem):
     # This method for the uniform cost search algorithm
@@ -154,12 +162,51 @@ def uniform_cost_search(problem):
 
     pass
 
+def misplaced_tile(state, goal_state):
+    misplaced = 0
+    for i in range(len(state)):
+        for j in range(len(state[i])):
+            if state[i][j] != goal_state[i][j] and state[i][j] != '*':
+                misplaced += 1
+    return misplaced
+
+def misplaced_test():
+    initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
+    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
+    misplaced_tiles = misplaced_tile(initial_state, goal_state)
+    print("Misplaced tiles:", misplaced_tiles)
+
+#misplaced_test()
+
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
     # pass the type of heuristic (Misplaced tile or Elucidean Distance)
     # A8 is just uniform cost search, but uses g
     pass
 
-            
+def main():
+    print("Welcome to the 862331611 8 puzzle solver.\n")
+    print("Type “1” to use a default puzzle, or “2” to enter your own puzzle.\n") 
+    number_option = input("Your choice:\n")
+    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
+    if number_option == '2':
+        state = get_initial_state()
+        print("\n")
+    elif number_option == '1':
+        state = [[1, 2, 3], ['*', 6, 7], [4, 5, 8]]
+        print("\n")
+    
+    print("Enter your choice of algorithm: \n")
+    print("1) uniform for uniform cost search\n")
+    print("2) misplaced for A* with the Misplaced Tile heuristic\n")
+    print("3) euclid for A* with the Euclidean distance heuristic \n")
+    algorithm_option = input("\n")
 
+    if algorithm_option == "uniform":
+        pass
+    elif algorithm_option == "misplaced":
+        pass
+    elif algorithm_option == "euclid":
+        pass
 
+main()
