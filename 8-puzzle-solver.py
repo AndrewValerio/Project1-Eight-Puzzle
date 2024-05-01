@@ -191,9 +191,11 @@ def main():
     goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
     if number_option == '2':
         state = get_initial_state()
+        problem = Problem(state)
         print("\n")
     elif number_option == '1':
         state = [[1, 2, 3], ['*', 6, 7], [4, 5, 8]]
+        problem = Problem(state)
         print("\n")
     
     print("Enter your choice of algorithm: \n")
