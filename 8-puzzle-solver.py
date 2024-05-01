@@ -115,7 +115,7 @@ class Problem:
         misplaced = 0
         for i in range(len(state)):
             for j in range(len(state[i])):
-                if state[i][j] != self.goal_state[i][j] and state[i][j] != '*':
+                if state[i][j] != self.goal_state[i][j]:
                     misplaced += 1
         return misplaced
 
@@ -176,7 +176,7 @@ def misplaced_test():
     misplaced_tiles = problem.misplaced_tile(initial_state)
     print("Misplaced tiles:", misplaced_tiles)
 
-misplaced_test()
+#misplaced_test()
 
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
@@ -200,7 +200,7 @@ def main():
     print("Enter your choice of algorithm: \n")
     print("1 for uniform cost search\n")
     print("2 for A* with the Misplaced Tile heuristic\n")
-    print("3 for A* with the Euclidean distance heuristic \n")
+    print("3 for A* with the Euclidean Distance heuristic \n")
     algorithm_option = input("\n")
 
     if algorithm_option == "1":
@@ -210,4 +210,4 @@ def main():
     elif algorithm_option == "3":
         pass
 
-#main()
+main()
