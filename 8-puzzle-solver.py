@@ -111,6 +111,14 @@ class Problem:
         # This method to get the distance the current state has to the goal
         pass
 
+    def misplaced_tile(self, state):
+        misplaced = 0
+        for i in range(len(state)):
+            for j in range(len(state[i])):
+                if state[i][j] != self.goal_state[i][j] and state[i][j] != '*':
+                    misplaced += 1
+        return misplaced
+
 def get_initial_state():
     print("Enter your puzzle, use a zero to represent the blank\n")
     initial_state = []
@@ -162,21 +170,13 @@ def uniform_cost_search(problem):
 
     pass
 
-def misplaced_tile(state, goal_state):
-    misplaced = 0
-    for i in range(len(state)):
-        for j in range(len(state[i])):
-            if state[i][j] != goal_state[i][j] and state[i][j] != '*':
-                misplaced += 1
-    return misplaced
-
 def misplaced_test():
     initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
-    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
-    misplaced_tiles = misplaced_tile(initial_state, goal_state)
+    problem = Problem(initial_state)
+    misplaced_tiles = problem.misplaced_tile(initial_state)
     print("Misplaced tiles:", misplaced_tiles)
 
-#misplaced_test()
+misplaced_test()
 
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
@@ -188,7 +188,6 @@ def main():
     print("Welcome to the 862331611 8 puzzle solver.\n")
     print("Type “1” to use a default puzzle, or “2” to enter your own puzzle.\n") 
     number_option = input("Your choice:\n")
-    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
     if number_option == '2':
         state = get_initial_state()
         problem = Problem(state)
@@ -211,4 +210,4 @@ def main():
     elif algorithm_option == "3":
         pass
 
-main()
+#main()
