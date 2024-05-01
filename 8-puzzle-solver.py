@@ -197,16 +197,16 @@ def main():
         print("\n")
     
     print("Enter your choice of algorithm: \n")
-    print("1) uniform for uniform cost search\n")
-    print("2) misplaced for A* with the Misplaced Tile heuristic\n")
-    print("3) euclid for A* with the Euclidean distance heuristic \n")
+    print("1 for uniform cost search\n")
+    print("2 for A* with the Misplaced Tile heuristic\n")
+    print("3 for A* with the Euclidean distance heuristic \n")
     algorithm_option = input("\n")
 
-    if algorithm_option == "uniform":
+    if algorithm_option == "1":
         pass
-    elif algorithm_option == "misplaced":
+    elif algorithm_option == "2":
         pass
-    elif algorithm_option == "euclid":
+    elif algorithm_option == "3":
         pass
 
 main()
