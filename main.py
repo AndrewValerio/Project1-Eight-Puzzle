@@ -21,11 +21,11 @@ def main():
     algorithm_option = input("\n")
 
     if algorithm_option == "1":
-        pass
+        result = uniform_cost_search(problem)
     elif algorithm_option == "2":
-        pass
+        result = a_star_search(problem, Problem.misplaced_tile(state))
     elif algorithm_option == "3":
-        pass
+        result = a_star_search(problem, Node.euclidean_distance())
 
 print("Testing node moving")
 
