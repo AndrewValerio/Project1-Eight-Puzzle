@@ -193,7 +193,7 @@ def main():
         problem = Problem(state)
         print("\n")
     elif number_option == '1':
-        state = [[1, 2, 3], ['*', 6, 7], [4, 5, 8]]
+        state = [[1, 2, 3], [4, 5, 6], [7, '*', 8]]
         problem = Problem(state)
         print("\n")
     
@@ -204,10 +204,12 @@ def main():
     algorithm_option = input("\n")
 
     if algorithm_option == "1":
-        pass
+        solution = uniform_cost_search(problem)
     elif algorithm_option == "2":
-        pass
+        solution = a_star_search(problem, heuristic = 'misplaced_tile')
     elif algorithm_option == "3":
-        pass
+        solution = a_star_search(problem, heuristic = 'euclidean_distance')
+
+    
 
 #main()
