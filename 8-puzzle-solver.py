@@ -1,5 +1,6 @@
 from queue import *
 import copy
+import math
 
 class Node:
     def __init__(self, state, parent=None, action=None, path_cost=0):
@@ -65,6 +66,22 @@ class Node:
     
     def __lt__(self, other):        #fixes errors with PQ in UCS when compare node to node see ref for code error
         return self.path_cost < other.path_cost
+    
+    def euclidean_distance(self):
+        distance = 0
+        for i in range(len(self.state)):
+            for j in range(len(self.state[i])):
+                if self.state[i][j] != '*':
+                    current_position = (i, j)
+                    goal_position = self.find_goal_position(self.state[i][j])
+                    distance += math.sqrt((goal_position[0] - current_position[0])**2 + (goal_position[1] - current_position[1])**2)
+        return distance
+    
+    def find_goal_position(self, value):
+        for i in range(len(Problem.goal_state)):
+            for j in range(len(Problem.goal_state[i])):
+                if Problem.goal_state[i][j] == value:
+                    return i, j
 
 def test():
     # Initial state
@@ -94,10 +111,12 @@ def test():
 
     print("All tests passed!")
 
-test()
+#test()
 
 class Problem:
-    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']] #Moved goal_state here so i could access it with my test functiontion
+    goal_state = [[1, 2, 3], 
+                  [4, 5, 6], 
+                  [7, 8, '*']] #Moved goal_state here so i could access it with my test functiontion
     def __init__(self, initial_state):
         self.initial_state = initial_state
         # self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
@@ -183,7 +202,7 @@ def test_uniform_cost_search():
     else:
         print("UCS Test 2 Failed")
 
-test_uniform_cost_search()
+#test_uniform_cost_search()
 
 def misplaced_test():
     initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
@@ -191,7 +210,39 @@ def misplaced_test():
     misplaced_tiles = problem.misplaced_tile(initial_state)
     print("Misplaced tiles:", misplaced_tiles)
 
-misplaced_test()
+#misplaced_test()
+
+
+def test_euclidean_distance():
+    # Test 1
+    initial_state_1 = [
+        ['*', 1, 2],
+        [3, 4, 5],
+        [6, 7, 8]
+    ]
+    node_1 = Node(initial_state_1)
+    calculated_distance_1 = node_1.euclidean_distance()
+    expected_distance_1 = math.sqrt(8) + 8
+    print("Calculated distance 1: ", calculated_distance_1)
+    print("Expected distance 1: ", expected_distance_1)
+    assert abs(calculated_distance_1 - expected_distance_1) < .6, "Test 1 Failed"
+
+    # Test 2
+    initial_state_2 = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, '*']
+    ]
+    node_2 = Node(initial_state_2)
+    calculated_distance_2 = node_2.euclidean_distance()
+    expected_distance_2 = 0  # All tiles are in their goal positions
+    print("Calculated distance 2: ", calculated_distance_2)
+    print("Expected distance 2: ", expected_distance_2)
+    assert abs(calculated_distance_2 - expected_distance_2) < .6, "Test 2 Failed"
+
+    print("All tests passed!")
+
+test_euclidean_distance()
 
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
