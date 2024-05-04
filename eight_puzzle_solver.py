@@ -120,9 +120,15 @@ def uniform_cost_search(problem):
     frontier.put((0, node)) 
     explored = set() 
 
+    expanded_nodes = 0
+    max_queue = 1
+
     while not frontier.empty():  
         _, node = frontier.get()  
+        expanded_nodes += 1
         if problem.goal_test(node.state):  
+            print("Total nodes expanded: ", expanded_nodes)
+            print("Maximum queue size: ", max_queue)
             return node 
 
         explored.add(tuple(map(tuple, node.state)))  
