@@ -67,29 +67,7 @@ class Node:
     def __lt__(self, other):        #fixes errors with PQ in UCS when compare node to node see ref for code error
         return self.path_cost < other.path_cost
     
-    def euclidean_distance(self):
-        distance = 0
-        for i in range(len(self.state)):
-            for j in range(len(self.state[i])):
-                if self.state[i][j] != '*':
-                    current_position = (i, j)
-                    goal_position = self.find_goal_position(self.state[i][j])
-                    distance += math.sqrt((goal_position[0] - current_position[0])**2 + (goal_position[1] - current_position[1])**2)
-        return distance
-    
-    def misplaced_tile(self):
-        misplaced = 0
-        for i in range(len(self.state)):
-            for j in range(len(self.state[i])):
-                if self.state[i][j] != Problem.goal_state[i][j] and self.state[i][j] != '*':
-                    misplaced += 1
-        return misplaced
-    
-    def find_goal_position(self, value):
-        for i in range(len(Problem.goal_state)):
-            for j in range(len(Problem.goal_state[i])):
-                if Problem.goal_state[i][j] == value:
-                    return i, j
+
 
 class Problem:
     #goal_state = [[1, 2, 3], 
@@ -114,12 +92,30 @@ class Problem:
                     misplaced += 1
         return misplaced
     
+    def euclidean_distance(self, node):
+        state = node.state
+        distance = 0
+        for i in range(len(state)):
+            for j in range(len(state[i])):
+                if state[i][j] != '*':
+                    current_position = (i, j)
+                    goal_position = self.find_goal_position(state[i][j])
+                    distance += math.sqrt((goal_position[0] - current_position[0])**2 + (goal_position[1] - current_position[1])**2)
+        return distance
+    
+    def find_goal_position(self, value):
+        for i in range(len(self.goal_state)):
+            for j in range(len(self.goal_state[i])):
+                if self.goal_state[i][j] == value:
+                    return i, j
+    
 def get_initial_state():
-    print("Enter your puzzle, use a zero to represent the blank\n")
+    print("Enter your puzzle, use a * to represent the blank\n")
     initial_state = []
     for i in range(3):
         row_input = input("Enter the {} row with three numbers, use space or tabs between numbers: ".format(["first", "second", "third"][i])).strip()
         row = row_input.split()
+        row = [int(num) if num.isdigit() else num for num in row]  # Convert numbers to integers
         initial_state.append(row)
     return initial_state
 

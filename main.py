@@ -25,9 +25,22 @@ def main():
     elif algorithm_option == "2":
         result = a_star_search(problem, problem.misplaced_tile)
     elif algorithm_option == "3":
-        result = a_star_search(problem, Node.euclidean_distance()) 
+        result = a_star_search(problem, problem.euclidean_distance) 
 
-    print(result)
+    if result is not None:
+        print_solution(result)
+    else:
+        print("No solution found.")
+
+def print_solution(node):
+    # This function will trace back from the goal node to the initial node
+    path = []
+    while node.parent is not None:  # Trace back the path
+        path.append(node.action)
+        node = node.parent
+    path.reverse()  # Reverse the path to get the correct order
+    for action in path:
+        print(action)  # Print each action in the path
 
 main()
 
