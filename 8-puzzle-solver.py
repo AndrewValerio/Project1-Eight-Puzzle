@@ -6,8 +6,8 @@ class Node:
         self.state = state
         self.parent = parent
         self.action = action
-        self.path_cost = path_cost # path_cost is G(n), distance to goal is H(n)
-
+        self.path_cost = path_cost
+        
     def findStar(self):
         for i in range(len(self.state)):
             for j in range(len(self.state[i])):
@@ -15,7 +15,6 @@ class Node:
                     return i, j
 
     def get_children(self):
-        # This method to generate the children of this node
         nodes_children = []
         for move in [self.go_left(), self.go_right(), self.go_up(), self.go_down()]:
             if move is not None:
@@ -33,7 +32,7 @@ class Node:
             child_state = [list(row) for row in self.state]  # Create a copy of the current state
             child_state[star_row][star_col], child_state[star_row][star_col - 1] = child_state[star_row][star_col - 1], child_state[star_row][star_col]
             return Node(child_state, self, 'left', self.path_cost + 1)
-        
+
     #right 
     def go_right(self):
         star_row, star_col = self.findStar()
@@ -43,7 +42,7 @@ class Node:
             child_state = [list(row) for row in self.state]  # Create a copy of the current state
             child_state[star_row][star_col], child_state[star_row][star_col + 1] = child_state[star_row][star_col + 1], child_state[star_row][star_col]
             return Node(child_state, self, 'right', self.path_cost + 1)
-        
+
     #up
     def go_up(self):
         star_row, star_col = self.findStar()
@@ -53,7 +52,7 @@ class Node:
             child_state = [list(row) for row in self.state]  # Create a copy of the current state
             child_state[star_row][star_col], child_state[star_row - 1][star_col] = child_state[star_row - 1][star_col], child_state[star_row][star_col]
             return Node(child_state, self, 'up', self.path_cost + 1)
-        
+
     #down
     def go_down(self):
         star_row, star_col = self.findStar()
@@ -63,7 +62,10 @@ class Node:
             child_state = [list(row) for row in self.state]  # Create a copy of the current state
             child_state[star_row][star_col], child_state[star_row + 1][star_col] = child_state[star_row + 1][star_col], child_state[star_row][star_col]
             return Node(child_state, self, 'down', self.path_cost + 1)
-        
+    
+    def __lt__(self, other):        #fixes errors with PQ in UCS when compare node to node see ref for code error
+        return self.path_cost < other.path_cost
+
 def test():
     # Initial state
     initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
@@ -94,71 +96,110 @@ def test():
 
 test()
 
-
-
 class Problem:
+    goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']] #Moved goal_state here so i could access it with my test functiontion
     def __init__(self, initial_state):
         self.initial_state = initial_state
-        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
+        # self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
         self.operators = []  # List of operators
         self.frontier = PriorityQueue()
         self.explored = set()
 
     def goal_test(self, state):
-        # This method to check if the goal state has been reached
-        pass
+        return state == self.goal_state
 
     def get_distance_to_goal(self, state1, state2):
         # This method to get the distance the current state has to the goal
         pass
 
-def uniform_cost_search(problem):
-    # This method for the uniform cost search algorithm
-
-    # Template for function ----
-
-    # function UNIFORM-COST-SEARCH(problem) returns a solution, or failure
-    # node <-a node with STATE = problem.INITIAL-STATE, PATH-COST = 0
-    # frontier <- a priority queue ordered by PATH-COST, with node as the only element
-    # explored <- an empty set
-    # loop do
-    # if EMPTY?(frontier ) then return failure
-    # node <- POP(frontier ) /* chooses the lowest-cost node in frontier */
-    # if problem.GOAL-TEST(node.STATE) then return SOLUTION(node)
-    # add node.STATE to explored
-    # for each action in problem.ACTIONS(node.STATE) do
-    # child <- CHILD-NODE(problem, node, action)
-    # if child.STATE is not in explored or frontier then
-    # frontier <- INSERT(child,frontier )
-    # else if child.STATE is in frontier with higher PATH-COST then
-    # replace that frontier node with child
-
-    # function findStar(puzzle)
-    # puzzle is a 3x3 matrix
-
-    # for i -> row
-       # for j -> column
-
-    # if  [i,j] == '*'
-
-    # curent_puzzle = [
-    #    [3,    6,    7],
-    #    [5,    8,    *],
-    #    [2     1,    4],
-    # ]
-
-    # returns [row, column] of the star [1, 2]
-
-    # figuring out path cost
+    def misplaced_tile(self, state):
+        misplaced = 0
+        for i in range(len(state)):
+            for j in range(len(state[i])):
+                if state[i][j] != self.goal_state[i][j]:
+                    misplaced += 1
+        return misplaced
     
+    def get_initial_state():
+        print("Enter your puzzle, use a zero to represent the blank\n")
+        initial_state = []
+        for i in range(3):
+            row_input = input("Enter the {} row with three numbers, use space or tabs between numbers: ".format(["first", "second", "third"][i])).strip()
+            row = row_input.split()
+            initial_state.append(row)
+        return initial_state
 
-    pass
+def uniform_cost_search(problem):
+    node = Node(problem.initial_state, path_cost=0)
+    frontier = PriorityQueue()
+    frontier.put((0, node)) 
+    explored = set() 
+
+    while not frontier.empty():  
+        _, node = frontier.get()  
+        if problem.goal_test(node.state):  
+            return node 
+
+        explored.add(tuple(map(tuple, node.state)))  
+        for child in node.get_children(): 
+            child_state_tuple = tuple(map(tuple, child.state))
+            if child_state_tuple not in explored and not any(child_state_tuple == tuple(map(tuple, n[1].state)) for n in frontier.queue):
+                frontier.put((child.path_cost, child))  
+            else:
+                for f in list(frontier.queue):
+                    if child_state_tuple == tuple(map(tuple, f[1].state)) and f[1].path_cost > child.path_cost:
+                        frontier.queue.remove(f)
+                        frontier.put((child.path_cost, child)) 
+                        break
+
+    return None #
+
+def test_uniform_cost_search():
+    # Test 1
+    initial_state_1 = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, '*', 8]
+    ]
+
+    problem_1 = Problem(initial_state_1)  
+    result_1 = uniform_cost_search(problem_1)
+    if result_1 and result_1.state == Problem.goal_state:
+        print("UCS Test 1 Passed")
+    else:
+        print("UCS Test 1 Failed")
+
+    # Test 2
+    initial_state_2 = [
+        [1, '*', 3],
+        [4, 2, 5],
+        [7, 8, 6]
+    ]
+
+    problem_2 = Problem(initial_state_2)
+    result_2 = uniform_cost_search(problem_2)
+    if result_2 and result_2.state == Problem.goal_state:
+        print("UCS Test 2 Passed")
+    else:
+        print("UCS Test 2 Failed")
+
+test_uniform_cost_search()
+
+def misplaced_test():
+    initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
+    problem = Problem(initial_state)
+    misplaced_tiles = problem.misplaced_tile(initial_state)
+    print("Misplaced tiles:", misplaced_tiles)
+
+misplaced_test()
 
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
     # pass the type of heuristic (Misplaced tile or Elucidean Distance)
     # A8 is just uniform cost search, but uses g
     pass
+
+
 
             
 
