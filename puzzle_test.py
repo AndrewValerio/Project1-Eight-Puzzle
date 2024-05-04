@@ -38,7 +38,7 @@ def test_uniform_cost_search():
 
     problem_1 = Problem(initial_state_1)  
     result_1 = uniform_cost_search(problem_1)
-    if result_1 and result_1.state == Problem.goal_state:
+    if result_1 and result_1.state == problem_1.goal_state:
         print("UCS Test 1 Passed")
     else:
         print("UCS Test 1 Failed")
@@ -52,7 +52,7 @@ def test_uniform_cost_search():
 
     problem_2 = Problem(initial_state_2)
     result_2 = uniform_cost_search(problem_2)
-    if result_2 and result_2.state == Problem.goal_state:
+    if result_2 and result_2.state == problem_2.goal_state:
         print("UCS Test 2 Passed")
     else:
         print("UCS Test 2 Failed")

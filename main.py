@@ -23,28 +23,31 @@ def main():
     if algorithm_option == "1":
         result = uniform_cost_search(problem)
     elif algorithm_option == "2":
-        result = a_star_search(problem, Problem.misplaced_tile(state))
+        result = a_star_search(problem, Node.misplaced_tile)
     elif algorithm_option == "3":
-        result = a_star_search(problem, Node.euclidean_distance()) 
+        result = a_star_search(problem, Node.euclidean_distance) 
 
-print("Testing node moving")
+    print(result)
+#print("Testing node moving")
 
-test_node_moves()
+#test_node_moves()
 
-print("Testing Uniform Cost Search")
+#print("Testing Uniform Cost Search")
 
-print()
+#print()
 
-test_uniform_cost_search()
+#test_uniform_cost_search()
 
-print("Testing Misplaced Tiles")
+#print("Testing Misplaced Tiles")
 
-print()
+#print()
 
-misplaced_test()
+#misplaced_test()
 
-print("Testing Euclidean Distance")
+#print("Testing Euclidean Distance")
 
-print()
+#print()
 
-test_euclidean_distance()
+#test_euclidean_distance()
+
+main()
