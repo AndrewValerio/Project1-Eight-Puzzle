@@ -131,18 +131,18 @@ class Problem:
         misplaced = 0
         for i in range(len(state)):
             for j in range(len(state[i])):
-                if state[i][j] != self.goal_state[i][j]:
+                if state[i][j] != self.goal_state[i][j] and state[i][j] != '*':
                     misplaced += 1
         return misplaced
     
-    def get_initial_state():
-        print("Enter your puzzle, use a zero to represent the blank\n")
-        initial_state = []
-        for i in range(3):
-            row_input = input("Enter the {} row with three numbers, use space or tabs between numbers: ".format(["first", "second", "third"][i])).strip()
-            row = row_input.split()
-            initial_state.append(row)
-        return initial_state
+def get_initial_state():
+    print("Enter your puzzle, use a zero to represent the blank\n")
+    initial_state = []
+    for i in range(3):
+        row_input = input("Enter the {} row with three numbers, use space or tabs between numbers: ".format(["first", "second", "third"][i])).strip()
+        row = row_input.split()
+        initial_state.append(row)
+    return initial_state
 
 def uniform_cost_search(problem):
     node = Node(problem.initial_state, path_cost=0)
@@ -245,6 +245,36 @@ def a_star_search(problem, heuristic):
     # pass the type of heuristic (Misplaced tile or Elucidean Distance)
     # A8 is just uniform cost search, but uses g
     pass
+
+
+def main():
+    print("Welcome to the 862331611 8 puzzle solver.\n")
+    print("Type “1” to use a default puzzle, or “2” to enter your own puzzle.\n") 
+    number_option = input("Your choice:\n")
+    if number_option == '2':
+        state = get_initial_state()
+        problem = Problem(state)
+        print("\n")
+    elif number_option == '1':
+        state = [[1, 2, 3], [4, 5, 6], [7, '*', 8]]
+        problem = Problem(state)
+        print("\n")
+    
+    print("Enter your choice of algorithm: \n")
+    print("1 for uniform cost search\n")
+    print("2 for A* with the Misplaced Tile heuristic\n")
+    print("3 for A* with the Euclidean Distance heuristic \n")
+    algorithm_option = input("\n")
+
+    if algorithm_option == "1":
+        pass
+    elif algorithm_option == "2":
+        pass
+    elif algorithm_option == "3":
+        pass
+    
+
+#main()
 
 
 
