@@ -204,12 +204,11 @@ def main():
     algorithm_option = input("\n")
 
     if algorithm_option == "1":
-        solution = uniform_cost_search(problem)
+        pass
     elif algorithm_option == "2":
-        solution = a_star_search(problem, heuristic = 'misplaced_tile')
+        pass
     elif algorithm_option == "3":
-        solution = a_star_search(problem, heuristic = 'euclidean_distance')
-
+        pass
     
 
 #main()
