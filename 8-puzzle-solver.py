@@ -127,10 +127,6 @@ class Problem:
     def goal_test(self, state):
         return state == self.goal_state
 
-    def get_distance_to_goal(self, state1, state2):
-        # This method to get the distance the current state has to the goal
-        pass
-
     def misplaced_tile(self, state):
         misplaced = 0
         for i in range(len(state)):
