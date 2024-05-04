@@ -143,7 +143,29 @@ def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
     # pass the type of heuristic (Misplaced tile or Elucidean Distance)
     # A8 is just uniform cost search, but uses g
-    pass
+    node = Node(problem.initial_state, path_cost=0)
+    frontier = PriorityQueue()
+    frontier.put((heuristic, node)) 
+    explored = set() 
+
+    while not frontier.empty():
+        _, node = frontier.get()
+    if problem.goal_test(node.state):
+        return node
+
+    explored.add(tuple(map(tuple, node.state)))
+    for child in node.get_children():
+        child_state_tuple = tuple(map(tuple, child.state))
+        if child_state_tuple not in explored and not any(child_state_tuple == tuple(map(tuple, n[1].state)) for n in frontier.queue):
+            frontier.put((child.path_cost + heuristic(child), child))
+        else:
+            for f in list(frontier.queue):
+                if child_state_tuple == tuple(map(tuple, f[1].state)) and f[1].path_cost > child.path_cost:
+                    frontier.queue.remove(f)
+                    frontier.put((child.path_cost + heuristic(child), child))
+                    break
+
+    return None
 
 
 

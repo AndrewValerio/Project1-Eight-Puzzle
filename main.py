@@ -25,7 +25,7 @@ def main():
     elif algorithm_option == "2":
         result = a_star_search(problem, Problem.misplaced_tile(state))
     elif algorithm_option == "3":
-        result = a_star_search(problem, Node.euclidean_distance())
+        result = a_star_search(problem, Node.euclidean_distance()) 
 
 print("Testing node moving")
 
