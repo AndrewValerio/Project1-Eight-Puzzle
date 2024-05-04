@@ -89,7 +89,7 @@ class Problem:
                   [7, 8, '*']] #Moved goal_state here so i could access it with my test functiontion
     def __init__(self, initial_state):
         self.initial_state = initial_state
-        # self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
+        self.goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
         self.operators = []  # List of operators
         self.frontier = PriorityQueue()
         self.explored = set()
