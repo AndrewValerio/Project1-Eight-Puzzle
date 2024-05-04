@@ -36,11 +36,15 @@ def print_solution(node):
     # This function will trace back from the goal node to the initial node
     path = []
     while node.parent is not None:  # Trace back the path
-        path.append(node.action)
+        path.append(node)
         node = node.parent
+    path.append(node)
     path.reverse()  # Reverse the path to get the correct order
-    for action in path:
-        print(action)  # Print each action in the path
+    for node in path:
+        print(node.action)  # Print each action in the path
+        for row in node.state:
+            print(' '.join(str(cell) for cell in row))
+        print("\n")
 
 main()
 
