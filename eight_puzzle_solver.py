@@ -83,36 +83,6 @@ class Node:
                 if Problem.goal_state[i][j] == value:
                     return i, j
 
-def test():
-    # Initial state
-    initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
-    node = Node(initial_state)
-    print("Initial state: ", node.state)
-
-    # Test find_star
-    star_row, star_col = node.findStar()
-    print("Star position: ", (star_row, star_col))
-    assert (star_row, star_col) == (0, 0), "Expected (0, 0), but got ({}, {})".format(star_row, star_col)
-
-    # Test go_right
-    right_node = node.go_right()
-    print("State after going right: ", right_node.state)
-    assert right_node.state == [[1, '*', 2], [3, 4, 5], [6, 7, 8]], "Expected [[1, '*', 2], [3, 4, 5], [6, 7, 8]], but got {}".format(right_node.state)
-
-    # Test go_down
-    down_node = node.go_down()
-    print("State after going down: ", down_node.state)
-    assert down_node.state == [[3, 1, 2], ['*', 4, 5], [6, 7, 8]], "Expected [[3, 1, 2], ['*', 4, 5], [6, 7, 8]], but got {}".format(down_node.state)
-
-    # Test get_children
-    children = node.get_children()
-    print("Number of children: ", len(children))
-    assert len(children) == 2, "Expected 2 children, but got {}".format(len(children))
-
-    print("All tests passed!")
-
-#test()
-
 class Problem:
     goal_state = [[1, 2, 3], 
                   [4, 5, 6], 
@@ -169,112 +139,12 @@ def uniform_cost_search(problem):
 
     return None #
 
-def test_uniform_cost_search():
-    # Test 1
-    initial_state_1 = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, '*', 8]
-    ]
-
-    problem_1 = Problem(initial_state_1)  
-    result_1 = uniform_cost_search(problem_1)
-    if result_1 and result_1.state == Problem.goal_state:
-        print("UCS Test 1 Passed")
-    else:
-        print("UCS Test 1 Failed")
-
-    # Test 2
-    initial_state_2 = [
-        [1, '*', 3],
-        [4, 2, 5],
-        [7, 8, 6]
-    ]
-
-    problem_2 = Problem(initial_state_2)
-    result_2 = uniform_cost_search(problem_2)
-    if result_2 and result_2.state == Problem.goal_state:
-        print("UCS Test 2 Passed")
-    else:
-        print("UCS Test 2 Failed")
-
-#test_uniform_cost_search()
-
-def misplaced_test():
-    initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
-    problem = Problem(initial_state)
-    misplaced_tiles = problem.misplaced_tile(initial_state)
-    print("Misplaced tiles:", misplaced_tiles)
-
-#misplaced_test()
-
-
-def test_euclidean_distance():
-    # Test 1
-    initial_state_1 = [
-        ['*', 1, 2],
-        [3, 4, 5],
-        [6, 7, 8]
-    ]
-    node_1 = Node(initial_state_1)
-    calculated_distance_1 = node_1.euclidean_distance()
-    expected_distance_1 = math.sqrt(8) + 8
-    print("Calculated distance 1: ", calculated_distance_1)
-    print("Expected distance 1: ", expected_distance_1)
-    assert abs(calculated_distance_1 - expected_distance_1) < .6, "Test 1 Failed"
-
-    # Test 2
-    initial_state_2 = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, '*']
-    ]
-    node_2 = Node(initial_state_2)
-    calculated_distance_2 = node_2.euclidean_distance()
-    expected_distance_2 = 0  # All tiles are in their goal positions
-    print("Calculated distance 2: ", calculated_distance_2)
-    print("Expected distance 2: ", expected_distance_2)
-    assert abs(calculated_distance_2 - expected_distance_2) < .6, "Test 2 Failed"
-
-    print("All tests passed!")
-
-test_euclidean_distance()
-
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
     # pass the type of heuristic (Misplaced tile or Elucidean Distance)
     # A8 is just uniform cost search, but uses g
     pass
 
-
-def main():
-    print("Welcome to the 862331611 8 puzzle solver.\n")
-    print("Type “1” to use a default puzzle, or “2” to enter your own puzzle.\n") 
-    number_option = input("Your choice:\n")
-    if number_option == '2':
-        state = get_initial_state()
-        problem = Problem(state)
-        print("\n")
-    elif number_option == '1':
-        state = [[1, 2, 3], [4, 5, 6], [7, '*', 8]]
-        problem = Problem(state)
-        print("\n")
-    
-    print("Enter your choice of algorithm: \n")
-    print("1 for uniform cost search\n")
-    print("2 for A* with the Misplaced Tile heuristic\n")
-    print("3 for A* with the Euclidean Distance heuristic \n")
-    algorithm_option = input("\n")
-
-    if algorithm_option == "1":
-        pass
-    elif algorithm_option == "2":
-        pass
-    elif algorithm_option == "3":
-        pass
-    
-
-#main()
 
 
 
