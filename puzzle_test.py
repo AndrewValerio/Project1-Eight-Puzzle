@@ -29,33 +29,47 @@ def test_node_moves():
     print("All tests passed!")
 
 def test_uniform_cost_search():
-    # Test 1
+    # Test 1: Trivial
     initial_state_1 = [
         [1, 2, 3],
         [4, 5, 6],
-        [7, '*', 8]
+        [7, 8, '*']
     ]
 
     problem_1 = Problem(initial_state_1)  
     result_1 = uniform_cost_search(problem_1)
     if result_1 and result_1.state == problem_1.goal_state:
-        print("UCS Test 1 Passed")
+        print("UCS Trivial Test Passed")
     else:
-        print("UCS Test 1 Failed")
+        print("UCS Trivial Test Failed")
 
-    # Test 2
+    # Test 2: Easy
     initial_state_2 = [
-        [1, '*', 3],
-        [4, 2, 5],
+        [1, 2, '*'],
+        [4, 5, 3],
         [7, 8, 6]
     ]
 
     problem_2 = Problem(initial_state_2)
     result_2 = uniform_cost_search(problem_2)
     if result_2 and result_2.state == problem_2.goal_state:
-        print("UCS Test 2 Passed")
+        print("UCS Easy Test Passed")
     else:
-        print("UCS Test 2 Failed")
+        print("UCS Easy Test Failed")
+
+    # Test 3: Doable
+    initial_state_3 = [
+        ['*', 1, 2],
+        [4, 5, 3],
+        [7, 8, 6]
+    ]
+
+    problem_3 = Problem(initial_state_3)
+    result_3 = uniform_cost_search(problem_3)
+    if result_3 and result_3.state == problem_3.goal_state:
+        print("UCS Doable Test Passed")
+    else:
+        print("UCS Doable Test Failed")
 
 
 def misplaced_test():

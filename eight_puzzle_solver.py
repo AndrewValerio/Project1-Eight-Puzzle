@@ -120,22 +120,21 @@ def uniform_cost_search(problem):
     frontier.put((0, node)) 
     explored = set() 
 
-    expanded_nodes = 0
-    max_queue = 1
+    max_queue = 0
 
     while not frontier.empty():  
         _, node = frontier.get()  
-        expanded_nodes += 1
+        max_queue += 1
         if problem.goal_test(node.state):  
-            print("Total nodes expanded: ", expanded_nodes)
             print("Maximum queue size: ", max_queue)
             return node 
-
+        
         explored.add(tuple(map(tuple, node.state)))  
         for child in node.get_children(): 
             child_state_tuple = tuple(map(tuple, child.state))
             if child_state_tuple not in explored and not any(child_state_tuple == tuple(map(tuple, n[1].state)) for n in frontier.queue):
-                frontier.put((child.path_cost, child))  
+                frontier.put((child.path_cost, child))
+                current_queue += 1  
             else:
                 for f in list(frontier.queue):
                     if child_state_tuple == tuple(map(tuple, f[1].state)) and f[1].path_cost > child.path_cost:
@@ -143,7 +142,7 @@ def uniform_cost_search(problem):
                         frontier.put((child.path_cost, child)) 
                         break
 
-    return None #
+    return None 
 
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
