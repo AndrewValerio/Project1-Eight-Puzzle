@@ -77,6 +77,15 @@ class Node:
                     distance += math.sqrt((goal_position[0] - current_position[0])**2 + (goal_position[1] - current_position[1])**2)
         return distance
     
+    def misplaced_tile(self):
+        misplaced = 0
+        goal_state = [[1, 2, 3], [4, 5, 6], [7, 8, '*']]
+        for i in range(len(self.state)):
+            for j in range(len(self.state[i])):
+                if self.state[i][j] != goal_state[i][j] and self.state[i][j] != '*':
+                    misplaced += 1
+        return misplaced
+    
     def find_goal_position(self, value):
         for i in range(len(Problem.goal_state)):
             for j in range(len(Problem.goal_state[i])):

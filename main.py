@@ -31,24 +31,4 @@ def main():
 
 main()
 
-# print("Testing node moving")
 
-# test_node_moves()
-
-# print("Testing Uniform Cost Search")
-
-# print()
-
-# test_uniform_cost_search()
-
-# print("Testing Misplaced Tiles")
-
-# print()
-
-# misplaced_test()
-
-# print("Testing Euclidean Distance")
-
-# print()
-
-# test_euclidean_distance()
