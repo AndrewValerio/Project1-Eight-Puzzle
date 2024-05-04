@@ -120,7 +120,7 @@ class Problem:
         return misplaced
 
 def get_initial_state():
-    print("Enter your puzzle, use a zero to represent the blank\n")
+    print("Enter your puzzle, use a star to represent the blank\n")
     initial_state = []
     for i in range(3):
         row_input = input("Enter the {} row with three numbers, use space or tabs between numbers: ".format(["first", "second", "third"][i])).strip()
