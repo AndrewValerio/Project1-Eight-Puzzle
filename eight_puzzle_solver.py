@@ -145,7 +145,7 @@ def a_star_search(problem, heuristic):
     # A8 is just uniform cost search, but uses g
     node = Node(problem.initial_state, path_cost=0)
     frontier = PriorityQueue()
-    frontier.put((0, node)) 
+    frontier.put((heuristic, node)) 
     explored = set() 
 
     while not frontier.empty():
