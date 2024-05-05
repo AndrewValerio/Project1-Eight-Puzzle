@@ -1,3 +1,4 @@
+from math import ceil
 from eight_puzzle_solver import *
 
 def test_node_moves():
@@ -72,12 +73,18 @@ def test_euclidean_distance():
         [3, 4, 5],
         [6, 7, 8]
     ]
-    node_1 = Node(initial_state_1)
-    calculated_distance_1 = node_1.euclidean_distance()
-    expected_distance_1 = math.sqrt(8) + 8
+
+    print("Initial State 1:")
+    for row in initial_state_1:
+        print(row)
+
+    problem1 = Problem(initial_state_1)
+    node_1 = Node(initial_state_1, problem=problem1)
+    calculated_distance_1 = ceil(node_1.euclidean_distance())
+    expected_distance_1 = ceil(math.sqrt(8) + 8)
     print("Calculated distance 1: ", calculated_distance_1)
     print("Expected distance 1: ", expected_distance_1)
-    assert abs(calculated_distance_1 - expected_distance_1) < .6, "Test 1 Failed"
+    assert abs(calculated_distance_1 - expected_distance_1) < 1e-6, "Test 1 Failed"
 
     # Test 2
     initial_state_2 = [
@@ -85,12 +92,18 @@ def test_euclidean_distance():
         [4, 5, 6],
         [7, 8, '*']
     ]
-    node_2 = Node(initial_state_2)
+
+    print("Initial State 2:")
+    for row in initial_state_2:
+        print(row)
+        
+    problem2 = Problem(initial_state_2)
+    node_2 = Node(initial_state_2, problem=problem2)
     calculated_distance_2 = node_2.euclidean_distance()
     expected_distance_2 = 0  # All tiles are in their goal positions
     print("Calculated distance 2: ", calculated_distance_2)
     print("Expected distance 2: ", expected_distance_2)
-    assert abs(calculated_distance_2 - expected_distance_2) < .6, "Test 2 Failed"
+    assert abs(calculated_distance_2 - expected_distance_2) < 1e-6, "Test 2 Failed"
 
     print("All tests passed!")
 

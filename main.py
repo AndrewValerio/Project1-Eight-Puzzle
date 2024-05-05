@@ -1,3 +1,4 @@
+from math import ceil
 from eight_puzzle_solver import *
 from puzzle_test import *
 
@@ -28,11 +29,11 @@ def main():
         result = a_star_search(problem, problem.euclidean_distance) 
 
     if result is not None:
-        print_solution(result)
+        print_solution(result, algorithm_option)
     else:
         print("No solution found.")
 
-def print_solution(node):
+def print_solution(node, option):
     # This function will trace back from the goal node to the initial node
     path = []
     while node.parent is not None:  # Trace back the path
@@ -41,11 +42,34 @@ def print_solution(node):
     path.append(node)
     path.reverse()  # Reverse the path to get the correct order
     for node in path:
-        print(node.action)  # Print each action in the path
+        if node.action != None and node.problem.goal_test != True:
+            if option == "1":
+                print("The best state to expand with g(n) = ", node.path_cost, " is ", node.action)  # Print each action in the path
+            elif option == "2":
+                h_n = node.misplaced_tile()
+                print("The best state to expand with g(n) = ", node.path_cost, " and h(n) ", h_n , node.action)  # Print each action in the path
+            elif option == "3":
+                h_n = ceil(node.euclidean_distance())
+                print("The best state to expand with g(n) = ", node.path_cost, " and h(n) ", h_n , node.action)  # Print each action in the path
+        elif node.action == None:
+            print("Expanding State")
+
+  
         for row in node.state:
             print(' '.join(str(cell) for cell in row))
         print("\n")
 
+    print("GOOOOAAAAAAALLLLLLLLL")
+    print("")
+
+    print("To Solve this problem the search algorithm expanded a total of",node.problem.expanded_nodes,"nodes.")
+    print("")
+    print("The maximum number of nodes in the queue at any one time:",node.problem.max_queue,".")
+    print("") 
+    print("The depth of the goal node was",node.path_cost,".")
+    print("") 
+
 main()
+
 
 
