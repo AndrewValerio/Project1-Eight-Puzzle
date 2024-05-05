@@ -57,6 +57,8 @@ def print_solution(node, option):
   
         for row in node.state:
             print(' '.join(str(cell) for cell in row))
+        if node.action != None:
+            print("Expanding this node...")
         print("\n")
 
     print("GOOOOAAAAAAALLLLLLLLL")
