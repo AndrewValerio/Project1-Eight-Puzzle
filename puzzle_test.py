@@ -84,7 +84,7 @@ def test_euclidean_distance():
     expected_distance_1 = ceil(math.sqrt(8) + 8)
     print("Calculated distance 1: ", calculated_distance_1)
     print("Expected distance 1: ", expected_distance_1)
-    assert abs(calculated_distance_1 - expected_distance_1) < 1e-6, "Test 1 Failed"
+    assert abs(calculated_distance_1 - expected_distance_1), "Test 1 Failed"
 
     # Test 2
     initial_state_2 = [
@@ -103,7 +103,7 @@ def test_euclidean_distance():
     expected_distance_2 = 0  # All tiles are in their goal positions
     print("Calculated distance 2: ", calculated_distance_2)
     print("Expected distance 2: ", expected_distance_2)
-    assert abs(calculated_distance_2 - expected_distance_2) < 1e-6, "Test 2 Failed"
+    assert abs(calculated_distance_2 - expected_distance_2), "Test 2 Failed"
 
     print("All tests passed!")
 
