@@ -40,6 +40,7 @@ def test_uniform_cost_search():
     result_1 = uniform_cost_search(problem_1)
     if result_1 and result_1.state == problem_1.goal_state:
         print("UCS Trivial Test Passed")
+        print("")
     else:
         print("UCS Trivial Test Failed")
 
@@ -54,6 +55,7 @@ def test_uniform_cost_search():
     result_2 = uniform_cost_search(problem_2)
     if result_2 and result_2.state == problem_2.goal_state:
         print("UCS Easy Test Passed")
+        print("")
     else:
         print("UCS Easy Test Failed")
 
@@ -68,6 +70,7 @@ def test_uniform_cost_search():
     result_3 = uniform_cost_search(problem_3)
     if result_3 and result_3.state == problem_3.goal_state:
         print("UCS Doable Test Passed")
+        print("")
     else:
         print("UCS Doable Test Failed")
 

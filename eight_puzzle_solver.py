@@ -121,12 +121,20 @@ def uniform_cost_search(problem):
     explored = set() 
 
     max_queue = 0
+    goal_node_depth = 0
 
     while not frontier.empty():  
-        _, node = frontier.get()  
+        node = frontier.get()  
         max_queue += 1
+        expanded_nodes += 1 # because we expand whenever we pop a node
         if problem.goal_test(node.state):  
-            print("Maximum queue size: ", max_queue)
+            print("To Solve this problem the search algorithm expanded a total of",expanded_nodes,"nodes.")
+            print("")
+            print("The maximum number of nodes in the queue at any one time:",max_queue_size,".")
+            print("") 
+            print("The depth of the goal node was",node.path_cost,".")
+            print("")
+            print_solution_path(node)  
             return node 
         
         explored.add(tuple(map(tuple, node.state)))  
@@ -134,15 +142,35 @@ def uniform_cost_search(problem):
             child_state_tuple = tuple(map(tuple, child.state))
             if child_state_tuple not in explored and not any(child_state_tuple == tuple(map(tuple, n[1].state)) for n in frontier.queue):
                 frontier.put((child.path_cost, child))
-                current_queue += 1  
+                goal_node_depth += 1
             else:
                 for f in list(frontier.queue):
                     if child_state_tuple == tuple(map(tuple, f[1].state)) and f[1].path_cost > child.path_cost:
                         frontier.queue.remove(f)
                         frontier.put((child.path_cost, child)) 
                         break
-
+    print("No solution.")
     return None 
+
+# formats our problem for printing 
+def print_formatted_output(state):
+    for row in state:
+        print(" ".join(str(cell) for cell in row))
+        
+def print_solution_path(goal_state):
+    path_list = []
+    current_state = goal_state
+
+    while current_state is not None:
+        path_list.append(current_state)
+        current_state = current_state.parent
+    path_list.reverse()  
+    print("Solution Path:")
+    for node in path_list:
+        print_formatted_output(node.state)  
+        print("")
+
+
 
 def a_star_search(problem, heuristic):
     # This method for the A* search algorithm
