@@ -1,3 +1,4 @@
+from math import ceil
 from eight_puzzle_solver import *
 from puzzle_test import *
 
@@ -21,30 +22,56 @@ def main():
     algorithm_option = input("\n")
 
     if algorithm_option == "1":
-        pass
+        result = uniform_cost_search(problem)
     elif algorithm_option == "2":
-        pass
+        result = a_star_search(problem, problem.misplaced_tile)
     elif algorithm_option == "3":
-        pass
+        result = a_star_search(problem, problem.euclidean_distance) 
 
-print("Testing node moving")
+    if result is not None:
+        print_solution(result, algorithm_option)
+    else:
+        print("No solution found.")
 
-test_node_moves()
+def print_solution(node, option):
+    # This function will trace back from the goal node to the initial node
+    path = []
+    while node.parent is not None:  # Trace back the path
+        path.append(node)
+        node = node.parent
+    path.append(node)
+    path.reverse()  # Reverse the path to get the correct order
+    for node in path:
+        if node.action != None and node.problem.goal_test != True:
+            if option == "1":
+                print("The best state to expand with g(n) = ", node.path_cost, " is ", node.action)  # Print each action in the path
+            elif option == "2":
+                h_n = node.misplaced_tile()
+                print("The best state to expand with g(n) = ", node.path_cost, " and h(n) ", h_n , node.action)  # Print each action in the path
+            elif option == "3":
+                h_n = ceil(node.euclidean_distance())
+                print("The best state to expand with g(n) = ", node.path_cost, " and h(n) ", h_n , node.action)  # Print each action in the path
+        elif node.action == None:
+            print("Expanding State")
 
-print("Testing Uniform Cost Search")
+  
+        for row in node.state:
+            print(' '.join(str(cell) for cell in row))
+        if node.action != None:
+            print("Expanding this node...")
+        print("\n")
 
-print()
+    print("GOOOOAAAAAAALLLLLLLLL")
+    print("")
 
-test_uniform_cost_search()
+    print("To Solve this problem the search algorithm expanded a total of",node.problem.expanded_nodes,"nodes.")
+    print("")
+    print("The maximum number of nodes in the queue at any one time:",node.problem.max_queue,".")
+    print("") 
+    print("The depth of the goal node was",node.path_cost,".")
+    print("") 
 
-print("Testing Misplaced Tiles")
+main()
 
-print()
 
-misplaced_test()
 
-print("Testing Euclidean Distance")
-
-print()
-
-test_euclidean_distance()

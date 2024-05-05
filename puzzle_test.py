@@ -1,3 +1,4 @@
+from math import ceil
 from eight_puzzle_solver import *
 
 def test_node_moves():
@@ -38,7 +39,7 @@ def test_uniform_cost_search():
 
     problem_1 = Problem(initial_state_1)  
     result_1 = uniform_cost_search(problem_1)
-    if result_1 and result_1.state == Problem.goal_state:
+    if result_1 and result_1.state == problem_1.goal_state:
         print("UCS Test 1 Passed")
     else:
         print("UCS Test 1 Failed")
@@ -52,7 +53,7 @@ def test_uniform_cost_search():
 
     problem_2 = Problem(initial_state_2)
     result_2 = uniform_cost_search(problem_2)
-    if result_2 and result_2.state == Problem.goal_state:
+    if result_2 and result_2.state == problem_2.goal_state:
         print("UCS Test 2 Passed")
     else:
         print("UCS Test 2 Failed")
@@ -72,12 +73,18 @@ def test_euclidean_distance():
         [3, 4, 5],
         [6, 7, 8]
     ]
-    node_1 = Node(initial_state_1)
-    calculated_distance_1 = node_1.euclidean_distance()
-    expected_distance_1 = math.sqrt(8) + 8
+
+    print("Initial State 1:")
+    for row in initial_state_1:
+        print(row)
+
+    problem1 = Problem(initial_state_1)
+    node_1 = Node(initial_state_1, problem=problem1)
+    calculated_distance_1 = ceil(node_1.euclidean_distance())
+    expected_distance_1 = ceil(math.sqrt(8) + 8)
     print("Calculated distance 1: ", calculated_distance_1)
     print("Expected distance 1: ", expected_distance_1)
-    assert abs(calculated_distance_1 - expected_distance_1) < .6, "Test 1 Failed"
+    assert abs(calculated_distance_1 - expected_distance_1), "Test 1 Failed"
 
     # Test 2
     initial_state_2 = [
@@ -85,12 +92,18 @@ def test_euclidean_distance():
         [4, 5, 6],
         [7, 8, '*']
     ]
-    node_2 = Node(initial_state_2)
+
+    print("Initial State 2:")
+    for row in initial_state_2:
+        print(row)
+        
+    problem2 = Problem(initial_state_2)
+    node_2 = Node(initial_state_2, problem=problem2)
     calculated_distance_2 = node_2.euclidean_distance()
     expected_distance_2 = 0  # All tiles are in their goal positions
     print("Calculated distance 2: ", calculated_distance_2)
     print("Expected distance 2: ", expected_distance_2)
-    assert abs(calculated_distance_2 - expected_distance_2) < .6, "Test 2 Failed"
+    assert abs(calculated_distance_2 - expected_distance_2), "Test 2 Failed"
 
     print("All tests passed!")
 
