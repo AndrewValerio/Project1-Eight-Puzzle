@@ -152,19 +152,13 @@ def uniform_cost_search(problem):
 
     while not frontier.empty():  
         _, node = frontier.get() 
-        node.problem.max_queue += 1
-        node.problem.expanded_nodes += 1 # because we expand whenever we pop a node
+        node.problem.max_queue = max(node.problem.max_queue, frontier.qsize())  # Update max_queue here 
         if problem.goal_test(node.state):  
-            # print("To Solve this problem the search algorithm expanded a total of",node.problem.expanded_nodes,"nodes.")
-            # print("")
-            # print("The maximum number of nodes in the queue at any one time:",node.problem.max_queue,".")
-            # print("") 
-            # print("The depth of the goal node was",node.path_cost,".")
-            # print("") 
             return node 
         
         explored.add(tuple(map(tuple, node.state)))  
         for child in node.get_children(): 
+            node.problem.expanded_nodes += 1
             child_state_tuple = tuple(map(tuple, child.state))
             if child_state_tuple not in explored and not any(child_state_tuple == tuple(map(tuple, n[1].state)) for n in frontier.queue):
                 frontier.put((child.path_cost, child))
@@ -189,13 +183,13 @@ def a_star_search(problem, heuristic):
 
     while not frontier.empty():
         _, node = frontier.get()
-        node.problem.max_queue += 1
-        node.problem.expanded_nodes += 1 # because we expand whenever we pop a node
+        node.problem.max_queue = max(node.problem.max_queue, frontier.qsize())  # Update max_queue here 
         if problem.goal_test(node.state):
             return node
 
         explored.add(tuple(map(tuple, node.state)))
         for child in node.get_children():
+            node.problem.expanded_nodes += 1
             child_state_tuple = tuple(map(tuple, child.state))
             if child_state_tuple not in explored and not any(child_state_tuple == tuple(map(tuple, n[1].state)) for n in frontier.queue):
                 frontier.put((child.path_cost + heuristic(child), child))
