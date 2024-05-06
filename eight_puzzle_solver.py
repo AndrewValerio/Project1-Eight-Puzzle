@@ -93,6 +93,10 @@ class Problem:
         self.operators = []  # List of operators
         self.frontier = PriorityQueue()
         self.explored = set()
+        self.explored = set()
+        self.max_queue = 0
+        self.goal_node_depth = 0
+        self.expanded_nodes = 0
 
     def goal_test(self, state):
         return state == self.goal_state
@@ -121,11 +125,21 @@ def uniform_cost_search(problem):
     frontier_set = set() #to fix runtime
     frontier_set.add(tuple(tuple(row) for row in problem.initial_state)) 
 
-    while not frontier.empty():  
-        node = frontier.get()  
+    problem.max_queue = 0
+    problem.goal_node_depth = 0
+    problem.expanded_nodes = 0
 
-        if problem.goal_test(node.state):  
+    while not frontier.empty():  
+        problem.max_queue = max(problem.max_queue, frontier.qsize())
+        node = frontier.get() 
+        problem.expanded_nodes += 1 
+
+        if problem.goal_test(node.state): 
+            problem.goal_node_depth = node.path_cost 
             print_solution_path(node)  
+            print(f"Maximum size of the queue was: {problem.max_queue}")
+            print(f"Depth of the goal node: {problem.goal_node_depth}")
+            print(f"Total expanded nodes: {problem.expanded_nodes}")
             return node 
         
         explored_tuple = tuple(tuple(row) for row in node.state)
