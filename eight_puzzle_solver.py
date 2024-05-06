@@ -1,4 +1,4 @@
-from queue import *
+from queue import PriorityQueue
 import copy
 import math
 
@@ -115,40 +115,31 @@ def get_initial_state():
     return initial_state
 
 def uniform_cost_search(problem):
-    node = Node(problem.initial_state, path_cost=0)
     frontier = PriorityQueue()
-    frontier.put((0, node)) 
+    frontier.put(Node(problem.initial_state)) # just changed to match suggested style
     explored = set() 
-
-    max_queue = 0
-    goal_node_depth = 0
+    frontier_set = set() #to fix runtime
+    frontier_set.add(tuple(tuple(row) for row in problem.initial_state)) 
 
     while not frontier.empty():  
         node = frontier.get()  
-        max_queue += 1
-        expanded_nodes += 1 # because we expand whenever we pop a node
+
         if problem.goal_test(node.state):  
-            print("To Solve this problem the search algorithm expanded a total of",expanded_nodes,"nodes.")
-            print("")
-            print("The maximum number of nodes in the queue at any one time:",max_queue_size,".")
-            print("") 
-            print("The depth of the goal node was",node.path_cost,".")
-            print("")
             print_solution_path(node)  
             return node 
         
-        explored.add(tuple(map(tuple, node.state)))  
-        for child in node.get_children(): 
-            child_state_tuple = tuple(map(tuple, child.state))
-            if child_state_tuple not in explored and not any(child_state_tuple == tuple(map(tuple, n[1].state)) for n in frontier.queue):
-                frontier.put((child.path_cost, child))
-                goal_node_depth += 1
-            else:
-                for f in list(frontier.queue):
-                    if child_state_tuple == tuple(map(tuple, f[1].state)) and f[1].path_cost > child.path_cost:
-                        frontier.queue.remove(f)
-                        frontier.put((child.path_cost, child)) 
-                        break
+        explored_tuple = tuple(tuple(row) for row in node.state)
+        
+        if explored_tuple not in explored:
+            explored.add(explored_tuple)
+
+            for child in node.get_children():
+                child_state_tuple = tuple(map(tuple, child.state))
+                #here 'any' (linear scan) was causing problem to run for too long
+                if child_state_tuple not in explored and child_state_tuple not in frontier_set:
+                    frontier.put(child)
+                    frontier_set.add(child_state_tuple)
+
     print("No solution.")
     return None 
 

@@ -74,6 +74,21 @@ def test_uniform_cost_search():
     else:
         print("UCS Doable Test Failed")
 
+    # Test 4: Oh Boy
+    initial_state_4 = [
+        [8, 7, 1],
+        [6, '*', 2],
+        [5, 4, 3]
+    ]
+
+    problem_4 = Problem(initial_state_4)
+    result_4 = uniform_cost_search(problem_4)
+    if result_4 and result_3.state == problem_4.goal_state:
+        print("UCS Oh Boy Test Passed")
+        print("")
+    else:
+        print("UCS Oh Boy Test Failed")
+
 
 def misplaced_test():
     initial_state = [['*', 1, 2], [3, 4, 5], [6, 7, 8]]
